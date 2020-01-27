@@ -1,16 +1,12 @@
-import sys
-sys.path.insert(1, '../Data')
-import Mer
-
 from PIL import Image
 
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 import os
-for element in os.listdir('../Data/Mer/'):
-    Image.open(element);
 
+for element in os.listdir('../donnees-projet/Data/Mer/'):
+    Image.open('../donnees-projet/Data/Mer/' + element);
 
 donnees = load_iris()
 X = donnees.data
