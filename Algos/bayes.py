@@ -4,9 +4,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 import os
+import numpy as np
 
-for element in os.listdir('../donnees-projet/Data/Mer/'):
-    Image.open('../donnees-projet/Data/Mer/' + element);
+#for element in os.listdir('../donnees-projet/Data/Mer/'):
+#    Image.open('../donnees-projet/Data/Mer/' + element)
+    
+img = Image.open('../donnees-projet/Data/Mer/838s.jpg')
+M = np.array(img)
+print(M)
 
 donnees = load_iris()
 X = donnees.data
@@ -16,4 +21,4 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
 classifieur = GaussianNB()
 classifieur.fit(X_train, y_train)
 y_predits = classifieur.predict(X_test)
-print("Taux de réussite : ", accuracy_score(y_test,y_predits))
+#{print("Taux de réussite : ", accuracy_score(y_test,y_predits))
