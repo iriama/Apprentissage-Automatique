@@ -5,7 +5,9 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 import os
 import numpy as np
-import pandas as pd
+from sklearn import svm
+from sklearn.model_selection import cross_val_score
+
 
 class myData :
     classe = []
@@ -18,6 +20,7 @@ class myData :
     
 data = myData()
 
+
 for element in os.listdir('../traitement-images/sortie/normalisation/Mer/'):
     try:
         img = Image.open('../traitement-images/sortie/normalisation/Mer/' + element)
@@ -26,8 +29,9 @@ for element in os.listdir('../traitement-images/sortie/normalisation/Mer/'):
         data.addmatrice(M)
     except IOError:
         print ('Erreur sur ouverture du fichier ')
+    
 
-     
+
 for element in os.listdir('../traitement-images/sortie/normalisation/Ailleurs/'):
     try:
         img = Image.open('../traitement-images/sortie/normalisation/Ailleurs/' + element)
@@ -38,11 +42,23 @@ for element in os.listdir('../traitement-images/sortie/normalisation/Ailleurs/')
         print ('Erreur sur ouverture du fichier ')
 
 
-X = data.matrice
+np_M = np.array(data.matrice)
+np_M = np_M.reshape(np_M.shape[0], np_M.shape[1] * np_M.shape[2] * np_M.shape[3])
+#print(np_M.shape)
+
+
+X = np_M
 y = data.classe
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+
+clf = svm.SVC(kernel='linear', C=1)
+scores = cross_val_score(clf, X, y, cv=5)
+print(scores)
+'''
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 classifieur = GaussianNB()
 classifieur.fit(X_train, y_train)
 y_predits = classifieur.predict(X_test)
-#print("Taux de réussite : ", accuracy_score(y_test,y_predits))
+
+print("Taux de réussite : ", accuracy_score(y_test,y_predits))
+'''
