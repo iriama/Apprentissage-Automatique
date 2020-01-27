@@ -21,28 +21,29 @@ class myData :
 data = myData()
 
 
-for element in os.listdir('../traitement-images/sortie/normalisation/Mer/'):
+for element in os.listdir('../traitement-images/sortie/noiretblanc2/Mer/'):
     try:
-        img = Image.open('../traitement-images/sortie/normalisation/Mer/' + element)
+        img = Image.open('../traitement-images/sortie/noiretblanc2/Mer/' + element)
         M = np.array(img)
         data.addclasse(0)
         data.addmatrice(M)
     except IOError:
-        print ('Erreur sur ouverture du fichier ')
+        print ('Erreur sur ouverture du fichier ' + img.filename)
     
 
 
-for element in os.listdir('../traitement-images/sortie/normalisation/Ailleurs/'):
+for element in os.listdir('../traitement-images/sortie/noiretblanc2/Ailleurs/'):
     try:
-        img = Image.open('../traitement-images/sortie/normalisation/Ailleurs/' + element)
+        img = Image.open('../traitement-images/sortie/noiretblanc2/Ailleurs/' + element)
         M = np.array(img)
         data.addclasse(1)
         data.addmatrice(M)
     except IOError:
-        print ('Erreur sur ouverture du fichier ')
+        print ('Erreur sur ouverture du fichier ' + img.filename)
 
 
 np_M = np.array(data.matrice)
+
 np_M = np_M.reshape(np_M.shape[0], np_M.shape[1] * np_M.shape[2] * np_M.shape[3])
 #print(np_M.shape)
 
@@ -51,13 +52,20 @@ X = np_M
 y = data.classe
 
 clf = svm.SVC(kernel='linear', C=1)
-scores = cross_val_score(clf, X, y, cv=5)
+scores = cross_val_score(clf, X, y, cv=10)
 print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 classifieur = GaussianNB()
+classifieur2 = svm.SVC(kernel='linear', C=1)
 classifieur.fit(X_train, y_train)
+classifieur2.fit(X_train, y_train)
+
 y_predits = classifieur.predict(X_test)
+y_predits2 = classifieur2.predict(X_test)
+
 
 print("Taux de réussite : ", accuracy_score(y_test,y_predits))
+print("Taux de réussite : ", accuracy_score(y_test,y_predits2))
+
