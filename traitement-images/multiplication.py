@@ -1,14 +1,21 @@
 # multiplication.py
-# populer la base de données en manipulant les images de base (noir et blanc, rotation et ajout de bruit aléatoire)
+# populer la base de données en manipulant les images de base
+# noir et blanc
+# essayer d'isoler le bleu
+# rotation 180
+# rotation sur l'axe horizontal
+# 200x200 depuis le centre
+# inversion des couleurs
 
 from os import path, makedirs
 from PIL import Image as pImage
+from PIL import ImageOps
 from utils import load_paths, add_suffix
 import numpy as np
 import sys
 
 IN_PATH = '../donnees-projet/Data'
-# IN_PATH = './sortie/test'
+#IN_PATH = './sortie/test'
 OUT_PATH = './sortie/multiplication'
 
 print('- Dossier entrée : "%s"' % IN_PATH)
@@ -28,8 +35,10 @@ def transform(paths, fnc):
         image = pImage.open(image_path)
         print('"%s" => %s' % (image_path, fnc.__name__))
         transformed = fnc(image)
-        
-        transformed_path = add_suffix(IN_PATH, OUT_PATH, image_path, '_' + fnc.__name__)
+
+        in_path = path.dirname(path.dirname(image_path))
+
+        transformed_path = add_suffix(in_path, OUT_PATH, image_path, '_' + fnc.__name__)
         makedirs(path.dirname(transformed_path), exist_ok=True)
         transformed.save(transformed_path)
 
@@ -44,14 +53,14 @@ def copy(image):
 def grayscale(image):
     return image.convert('L')
 
-def blue(img):
+def blue(image):
 
-    hsv = img.convert('HSV')
+    hsv = image.convert('HSV')
 
     pixdata = hsv.load()
 
-    for y in range(img.size[1]):
-        for x in range(img.size[0]):
+    for y in range(image.size[1]):
+        for x in range(image.size[0]):
             
             h, s, v = pixdata[x, y]
 
@@ -60,6 +69,39 @@ def blue(img):
 
     return hsv.convert('RGB')
 
+
+def rotation_180(image):
+    return image.rotate(180)
+
+def flip(image):
+    return image.transpose(pImage.FLIP_LEFT_RIGHT)
+
+def invert(image):
+    return ImageOps.invert(image.convert('RGB'))
+
+def crop(image):
+    
+
+    width, height = image.size 
+
+    new_width = min(width, 200)
+    new_height = min(height, 200)
+
+    left = (width - new_width)/2
+    top = (height - new_height)/2
+    right = (width + new_width)/2
+    bottom = (height + new_height)/2
+    
+    return image.crop((left, top, right, bottom))
+
+
+# Couleurs
 images_original = transform(images_path, copy)
 images_grayscale = transform(images_path, grayscale)
 images_blue = transform(images_path, blue)
+images_invert = transform(images_path, invert)
+
+# Rotation/position
+images_rotate_180 = transform(images_path + images_grayscale + images_blue + images_invert, rotation_180)
+images_flip = transform(images_path + images_grayscale + images_blue + images_invert, flip)
+images_crop = transform(images_path + images_grayscale + images_blue + images_invert, crop)
