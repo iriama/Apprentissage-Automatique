@@ -9,4 +9,6 @@ Organisation du projet
 À faire
 ====
 
-- [ ] Intégrer les dépendances (sickit-learn, pillow...) dans setup.py
+- [ ] Intégrer les dépendances dans setup.py :
+. sickit-learn
+. pillow
