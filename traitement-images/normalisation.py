@@ -1,10 +1,10 @@
 # normalisation.py
-# rédimensionner les images à classifier à la même taille
+# redimensionner les images au même format (200x200)
 # https://machinelearningmastery.com/how-to-load-and-manipulate-images-for-deep-learning-in-python-with-pil-pillow/
 
-from os import listdir, walk, path, makedirs
-from matplotlib import image as mImage
+from os import path, makedirs
 from PIL import Image as pImage
+from utils import load_paths
 
 IN_PATH = '../donnees-projet/Data'
 OUT_PATH = './sortie/normalisation'
@@ -13,13 +13,7 @@ print('- Dossier entrée : "%s"' % IN_PATH)
 print('- Dossier sortie : "%s"' % OUT_PATH)
 
 # Tableau de chemins des fichiers images à traiter
-images_path = []
-
-# Parcours le dossier et sous-dossiers Data pour peupler le tableau images_path
-for currentpath, folders, files in walk(IN_PATH):
-    for file in files:
-        image_path = path.join(currentpath, file)
-        images_path.append(image_path)
+images_path = load_paths(IN_PATH)
 
 # Créer le dossier de sortie s'il n'existe pas
 makedirs(OUT_PATH, exist_ok=True)
