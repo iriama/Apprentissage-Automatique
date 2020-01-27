@@ -52,8 +52,8 @@ y = data.classe
 
 clf = svm.SVC(kernel='linear', C=1)
 scores = cross_val_score(clf, X, y, cv=5)
-print(scores)
-'''
+print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 classifieur = GaussianNB()
@@ -61,4 +61,3 @@ classifieur.fit(X_train, y_train)
 y_predits = classifieur.predict(X_test)
 
 print("Taux de réussite : ", accuracy_score(y_test,y_predits))
-'''
