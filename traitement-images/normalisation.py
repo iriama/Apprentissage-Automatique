@@ -6,7 +6,7 @@ from os import path, makedirs
 from PIL import Image as pImage
 from utils import load_paths
 
-IN_PATH = '../donnees-projet/Data'
+IN_PATH = './sortie/multiplication'
 OUT_PATH = './sortie/normalisation'
 
 print('- Dossier entrée : "%s"' % IN_PATH)
@@ -20,11 +20,20 @@ makedirs(OUT_PATH, exist_ok=True)
 
 # Traite les images
 for image_path in images_path:
-    image = pImage.open(image_path)
+    image = pImage.open(image_path).convert('RGB')
     image_resized = image.resize((200, 200))
     print('> Image redimensionnée "%s" : %s => %s' % (image_path, image.size, image_resized.size))
     # image_resized.show()
     image_resized_path = OUT_PATH + image_path.replace(IN_PATH, '')
     makedirs(path.dirname(image_resized_path), exist_ok=True)
-    image_resized.save(image_resized_path)
+
+
+    name_split = path.basename(image_resized_path).split('.')
+    name = name_split[0]
+    extension = name_split[1]
+
+    if (extension != 'jpeg'):
+        image_resized_path.replace(extension, 'jpeg')
+
+    image_resized.save(image_resized_path, 'JPEG')
     print('  Sauvegardée sous "%s"' % image_resized_path)
