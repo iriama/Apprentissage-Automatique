@@ -5,20 +5,44 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 import os
 import numpy as np
+import pandas as pd
 
-#for element in os.listdir('../donnees-projet/Data/Mer/'):
-#    Image.open('../donnees-projet/Data/Mer/' + element)
+class myData :
+    classe = []
+    matrice = []
     
-img = Image.open('../donnees-projet/Data/Mer/838s.jpg')
-M = np.array(img)
-print(M)
+    def addclasse(self, element):
+        self.classe.append(element)
+    def addmatrice(self, element):
+        self.matrice.append(element)
+    
+data = myData()
 
-donnees = load_iris()
-X = donnees.data
-y = donnees.target
+for element in os.listdir('../traitement-images/sortie/normalisation/Mer/'):
+    try:
+        img = Image.open('../traitement-images/sortie/normalisation/Mer/' + element)
+        M = np.array(img)
+        data.addclasse(0)
+        data.addmatrice(M)
+    except IOError:
+        print ('Erreur sur ouverture du fichier ')
+
+     
+for element in os.listdir('../traitement-images/sortie/normalisation/Ailleurs/'):
+    try:
+        img = Image.open('../traitement-images/sortie/normalisation/Ailleurs/' + element)
+        M = np.array(img)
+        data.addclasse(1)
+        data.addmatrice(M)
+    except IOError:
+        print ('Erreur sur ouverture du fichier ')
+
+
+X = data.matrice
+y = data.classe
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
 
 classifieur = GaussianNB()
 classifieur.fit(X_train, y_train)
 y_predits = classifieur.predict(X_test)
-#{print("Taux de réussite : ", accuracy_score(y_test,y_predits))
+#print("Taux de réussite : ", accuracy_score(y_test,y_predits))
