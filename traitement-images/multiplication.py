@@ -84,8 +84,8 @@ def crop(image):
 
     width, height = image.size 
 
-    new_width = min(width, 200)
-    new_height = min(height, 200)
+    new_width = min(width/4, 100)
+    new_height = min(height/4, 100)
 
     left = (width - new_width)/2
     top = (height - new_height)/2
