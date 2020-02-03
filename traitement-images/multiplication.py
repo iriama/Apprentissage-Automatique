@@ -1,5 +1,5 @@
 # multiplication.py
-# populer la base de données en manipulant les images de base
+# populer la base de donnees en manipulant les images de base
 # noir et blanc
 # essayer d'isoler le bleu
 # rotation 180
@@ -11,20 +11,18 @@ from os import path, makedirs
 from PIL import Image as pImage
 from PIL import ImageOps
 from utils import load_paths, add_suffix
-import numpy as np
-import sys
 
 IN_PATH = '../donnees-projet/Data'
 #IN_PATH = './sortie/test'
 OUT_PATH = './sortie/multiplication'
 
-print('- Dossier entrée : "%s"' % IN_PATH)
+print('- Dossier entree : "%s"' % IN_PATH)
 print('- Dossier sortie : "%s"' % OUT_PATH)
 
-# Tableau de chemins des fichiers images à traiter
+# Tableau de chemins des fichiers images a  traiter
 images_path = load_paths(IN_PATH)
 
-# Créer le dossier de sortie s'il n'existe pas
+# Creer le dossier de sortie s'il n'existe pas
 makedirs(OUT_PATH, exist_ok=True)
 
 def transform(paths, fnc):
@@ -98,10 +96,10 @@ def crop(image):
 # Couleurs
 images_original = transform(images_path, copy)
 images_grayscale = transform(images_path, grayscale)
-images_blue = transform(images_path, blue)
+# images_blue = transform(images_path, blue)
 images_invert = transform(images_path, invert)
 
 # Rotation/position
-images_rotate_180 = transform(images_path + images_grayscale + images_blue + images_invert, rotation_180)
-images_flip = transform(images_path + images_grayscale + images_blue + images_invert, flip)
-images_crop = transform(images_path + images_grayscale + images_blue + images_invert, crop)
+images_rotate_180 = transform(images_path, rotation_180)# + images_grayscale + images_blue + images_invert, rotation_180)
+images_flip = transform(images_path, flip)# + images_grayscale + images_blue + images_invert, flip)
+images_crop = transform(images_path, crop) # + images_grayscale + images_blue + images_invert, crop)
