@@ -4,7 +4,7 @@ from PIL import Image
 import os
 import numpy as np
 
-PATH = '../traitement-images/sortie/noiretblanc2/'
+PATH = '../traitement-images/sortie/c+g/'
 
 class myData :
     classe = []

@@ -1,0 +1,53 @@
+bayes :
+
+c
+__
+Accuracy: 0.77 (+/- 0.09)
+Taux de réussite :  0.75
+
+g
+__
+Accuracy: 0.65 (+/- 0.10)
+Taux de réussite :  0.7666666666666667
+
+b
+__
+Accuracy: 0.71 (+/- 0.17)
+Taux de réussite :  0.6833333333333333
+
+i
+__
+Accuracy: 0.77 (+/- 0.09)
+Taux de réussite :  0.7333333333333333
+
+p
+__
+Accuracy: 0.73 (+/- 0.08)
+Taux de réussite :  0.8166666666666667
+
+rf
+__
+Accuracy: 0.77 (+/- 0.09)
+Taux de réussite :  0.7416666666666667
+
+c + i + rf
+__
+Accuracy: 0.65 (+/- 0.39)
+Taux de réussite :  0.6416666666666667
+
+c+i
+__
+Accuracy: 0.56 (+/- 0.12)
+Taux de réussite :  0.7
+
+c+rf
+__
+
+Accuracy: 0.76 (+/- 0.06)
+Taux de réussite :  0.7611111111111111
+
+c+g
+__
+
+
+

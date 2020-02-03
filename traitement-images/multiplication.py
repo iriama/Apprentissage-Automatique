@@ -94,12 +94,12 @@ def crop(image):
 
 
 # Couleurs
-images_original = transform(images_path, copy)
-images_grayscale = transform(images_path, grayscale)
-# images_blue = transform(images_path, blue)
-images_invert = transform(images_path, invert)
+#images_original = transform(images_path, copy)
+#images_grayscale = transform(images_path, grayscale)
+#images_blue = transform(images_path, blue)
+#images_invert = transform(images_path, invert)
 
 # Rotation/position
-images_rotate_180 = transform(images_path, rotation_180)# + images_grayscale + images_blue + images_invert, rotation_180)
-images_flip = transform(images_path, flip)# + images_grayscale + images_blue + images_invert, flip)
-# images_crop = transform(images_path, crop) # + images_grayscale + images_blue + images_invert, crop)
+#images_rotate_180 = transform(images_path, rotation_180)# + images_grayscale + images_blue + images_invert, rotation_180)
+#images_flip = transform(images_path, flip)# + images_grayscale + images_blue + images_invert, flip)
+images_crop = transform(images_path, crop) # + images_grayscale + images_blue + images_invert, crop)
