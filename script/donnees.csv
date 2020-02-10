@@ -1,1 +1,6 @@
-type image,nom algo,cross validation,accuracy
+BD,nom algo,cross validation
+c+g,Bayes,0.70 (+/- 0.11)
+c+g,regression logistique,0.56 (+/- 0.14)
+c+g,svc,0.58 (+/- 0.11),0.925
+c+g,foret_aleatoire,0.69 (+/- 0.16)
+c+i,Bayes,0.69 (+/- 0.19),0.6333333333333333
