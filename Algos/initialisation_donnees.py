@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
-
 from PIL import Image
 import os
 import numpy as np
 
-PATH = '../traitement-images/sortie/c+g/'
+#PATH = '../traitement-images/sortie/c+g/'
 
 class myData :
     classe = []
@@ -17,7 +15,7 @@ class myData :
     
 data = myData()
 
-def init_data() :
+def init_data(PATH) :
     for element in os.listdir(PATH + 'Mer/'):
         try:
             img = Image.open(PATH + 'Mer/' + element)
