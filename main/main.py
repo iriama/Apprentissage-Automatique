@@ -21,7 +21,7 @@ dump(classifieur, 'monclf.joblib')
 def predict_main(rep):
     classifieur2 = load('monclf.joblib')
     matrice = []
-    #normaliser()
+    normaliser(rep, rep)
     for element in os.listdir(rep):
         try:
             img = Image.open(rep + element)
@@ -36,4 +36,4 @@ def predict_main(rep):
     print('Classe image : ',Yt)
     return Yt
 
-predict_main('imgTest/')
+#predict_main('imgTest/')

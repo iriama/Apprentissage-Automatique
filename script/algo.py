@@ -40,6 +40,6 @@ svc = algo('svc', SVC(kernel='linear', C=1))
 foret_aleatoire = algo('foret_aleatoire', RandomForestClassifier(max_depth=2, random_state=0))
 
 algo = [foret_aleatoire]
-pathName = '../traitement-images/sortie/multirot/'
+pathName = '../traitement-images/sortie/rot/'
 
 analyser_donnees(pathName,algo, 'multirot')

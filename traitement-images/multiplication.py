@@ -14,7 +14,7 @@ from utils import load_paths, add_suffix
 
 IN_PATH = '../donnees-projet/Data'
 #IN_PATH = './sortie/test'
-OUT_PATH = './sortie/multiplication'
+OUT_PATH = './sortie/crop'
 
 print('- Dossier entree : "%s"' % IN_PATH)
 print('- Dossier sortie : "%s"' % OUT_PATH)
@@ -39,7 +39,7 @@ def transform(paths, fnc, arg=None):
         print('"%s" => %s' % (image_path, name))
 
         if arg is not None:
-            transformed = fnc(image, arg)
+            transformed = fnc(image)
         else:
             transformed = fnc(image)
 
@@ -128,6 +128,8 @@ def crop(image):
 # multi-rotate
 
 images_original = transform(images_path, copy)
-
+transform(images_path, crop)
+'''
 for i in range(10, 360, 10):
-    transform(images_path, rotate, i)
+    transform(images_path, crop, i)
+    '''
