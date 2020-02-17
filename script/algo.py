@@ -39,7 +39,7 @@ regression_logistique = algo('regression logistique', LogisticRegression(solver=
 svc = algo('svc', SVC(kernel='linear', C=1))
 foret_aleatoire = algo('foret_aleatoire', RandomForestClassifier(max_depth=2, random_state=0))
 
-algo = [bayes]
-pathName = '../traitement-images/sortie/c+g+rf/'
+algo = [foret_aleatoire]
+pathName = '../traitement-images/sortie/multirot/'
 
-analyser_donnees(pathName,algo, 'c+g+rf')
+analyser_donnees(pathName,algo, 'multirot')
