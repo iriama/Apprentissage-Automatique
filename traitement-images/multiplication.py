@@ -25,18 +25,27 @@ images_path = load_paths(IN_PATH)
 # Creer le dossier de sortie s'il n'existe pas
 makedirs(OUT_PATH, exist_ok=True)
 
-def transform(paths, fnc):
+def transform(paths, fnc, arg=None):
+
+    name = fnc.__name__
+
+    if arg is not None:
+        name += "_" + str(arg)
 
     result = []
 
     for image_path in paths:
         image = pImage.open(image_path)
-        print('"%s" => %s' % (image_path, fnc.__name__))
-        transformed = fnc(image)
+        print('"%s" => %s' % (image_path, name))
+
+        if arg is not None:
+            transformed = fnc(image, arg)
+        else:
+            transformed = fnc(image)
 
         in_path = path.dirname(path.dirname(image_path))
 
-        transformed_path = add_suffix(in_path, OUT_PATH, image_path, '_' + fnc.__name__)
+        transformed_path = add_suffix(in_path, OUT_PATH, image_path, '_' + name)
         makedirs(path.dirname(transformed_path), exist_ok=True)
         transformed.save(transformed_path)
 
@@ -68,11 +77,15 @@ def blue(image):
     return hsv.convert('RGB')
 
 
+def rotate(image, degree):
+    return image.rotate(degree, expand=1)
+
+
 def rotation_180(image):
-    return image.rotate(180)
+    return rotate(image, 180)
 
 def rotation_90(image):
-    return image.rotate(90)
+    return rotate(image, 90)
 
 def flip(image):
     return image.transpose(pImage.FLIP_LEFT_RIGHT)
@@ -108,6 +121,13 @@ def crop(image):
 #images_crop = transform(images_path, crop) # + images_grayscale + images_blue + images_invert, crop)
 
 # v2
+#images_original = transform(images_path, copy)
+#images_rotate_90 = transform(images_path, rotation_90)
+#images_rotate_180 = transform(images_path, rotation_180)
+
+# multi-rotate
+
 images_original = transform(images_path, copy)
-images_rotate_90 = transform(images_path, rotation_90)
-images_rotate_180 = transform(images_path, rotation_180)
+
+for i in range(10, 360, 10):
+    transform(images_path, rotate, i)
