@@ -6,8 +6,9 @@ from os import path, makedirs
 from PIL import Image as pImage
 from utils import load_paths
 
-IN_PATH = './sortie/multiplication'
-OUT_PATH = './sortie/normalisation'
+
+IN_PATH = '../main/imgTest'
+OUT_PATH = '../main/imgTest'
 
 print('- Dossier entree : "%s"' % IN_PATH)
 print('- Dossier sortie : "%s"' % OUT_PATH)

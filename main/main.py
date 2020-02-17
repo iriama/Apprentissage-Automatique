@@ -1,5 +1,6 @@
 import sys
 sys.path.insert(1, '../Algos')
+sys.path.insert(2, '../traitement-images')
 
 from joblib import dump, load
 from sklearn.ensemble import RandomForestClassifier
@@ -7,6 +8,7 @@ from initialisation_donnees import init_data
 import os
 import numpy as np
 from PIL import Image
+from normalisation import normaliser
 
 pathName = '../traitement-images/sortie/c+rf/'
 
@@ -18,8 +20,8 @@ dump(classifieur, 'monclf.joblib')
 
 def predict_main(rep):
     classifieur2 = load('monclf.joblib')
-    #Xt=0
     matrice = []
+    #normaliser()
     for element in os.listdir(rep):
         try:
             img = Image.open(rep + element)
