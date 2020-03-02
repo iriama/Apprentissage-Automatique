@@ -134,16 +134,16 @@ def multiplier(IN_PATH, OUT_PATH, single=False, subfolders=True):
     print('- Dossier sortie : "%s"' % OUT_PATH)
 
     transform(images_path, OUT_PATH, copy, not single or subfolders)
-    #transform(images_path, OUT_PATH, flip, not single or subfolders)
-    #transform(images_path, OUT_PATH, rotation_90, not single or subfolders)
-    #transform(images_path, OUT_PATH, rotation_180, not single or subfolders)
+    transform(images_path, OUT_PATH, flip, not single or subfolders)
+    transform(images_path, OUT_PATH, rotation_90, not single or subfolders)
+    transform(images_path, OUT_PATH, rotation_180, not single or subfolders)
 
     # perte couleurs
-    #transform(images_path, OUT_PATH, grayscale, not single or subfolders)
+    transform(images_path, OUT_PATH, grayscale, not single or subfolders)
     transform(images_path, OUT_PATH, invert, not single or subfolders)
 
     # perte pixels
-    #transform(images_path, OUT_PATH, crop, not single or subfolders)
+    transform(images_path, OUT_PATH, crop, not single or subfolders)
     transform(images_path, OUT_PATH, blue, not single or subfolders)
 
 #multiplier('../donnees-projet/Data', './sortie/multiplication')
