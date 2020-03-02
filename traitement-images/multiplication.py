@@ -1,31 +1,13 @@
 # multiplication.py
 # populer la base de donnees en manipulant les images de base
-# noir et blanc
-# essayer d'isoler le bleu
-# rotation 180
-# rotation sur l'axe horizontal
-# 200x200 depuis le centre
-# inversion des couleurs
 
 from os import path, makedirs
 from PIL import Image as pImage
 from PIL import ImageOps
 from utils import load_paths, add_suffix
 
-IN_PATH = '../donnees-projet/Data'
-#IN_PATH = './sortie/test'
-OUT_PATH = './sortie/crop'
 
-print('- Dossier entree : "%s"' % IN_PATH)
-print('- Dossier sortie : "%s"' % OUT_PATH)
-
-# Tableau de chemins des fichiers images a  traiter
-images_path = load_paths(IN_PATH)
-
-# Creer le dossier de sortie s'il n'existe pas
-makedirs(OUT_PATH, exist_ok=True)
-
-def transform(paths, fnc, arg=None):
+def transform(paths, out_path, fnc, subfolders=True, arg=None):
 
     name = fnc.__name__
 
@@ -43,10 +25,16 @@ def transform(paths, fnc, arg=None):
         else:
             transformed = fnc(image)
 
-        in_path = path.dirname(path.dirname(image_path))
+        if subfolders:
+            in_path = path.dirname(path.dirname(image_path))
+        else:
+            in_path = path.dirname(image_path)
 
-        transformed_path = add_suffix(in_path, OUT_PATH, image_path, '_' + name)
-        makedirs(path.dirname(transformed_path), exist_ok=True)
+        transformed_path = add_suffix(in_path, out_path, image_path, '_' + name)
+
+        if subfolders:
+            makedirs(path.dirname(transformed_path), exist_ok=True)
+        
         transformed.save(transformed_path)
 
         result.append(transformed_path)
@@ -94,8 +82,6 @@ def invert(image):
     return ImageOps.invert(image.convert('RGB'))
 
 def crop(image):
-    
-
     width, height = image.size 
 
     new_width = min(width/4, 100)
@@ -127,9 +113,37 @@ def crop(image):
 
 # multi-rotate
 
-images_original = transform(images_path, copy)
-transform(images_path, crop)
-'''
-for i in range(10, 360, 10):
-    transform(images_path, crop, i)
-    '''
+#images_original = transform(images_path, copy)
+#transform(images_path, crop)
+#for i in range(10, 360, 10):
+#    transform(images_path, crop, i)
+
+def multiplier(IN_PATH, OUT_PATH, single=False, subfolders=True):
+    
+    # Tableau de chemins des fichiers images a traiter
+    if single:
+        images_path = [IN_PATH]
+    else:
+        images_path = load_paths(IN_PATH)
+
+    # Creer le dossier de sortie s'il n'existe pas
+    makedirs(OUT_PATH, exist_ok=True)
+
+    print('> Multiplication')
+    print('- Dossier entree : "%s"' % IN_PATH)
+    print('- Dossier sortie : "%s"' % OUT_PATH)
+
+    transform(images_path, OUT_PATH, copy, not single or subfolders)
+    #transform(images_path, OUT_PATH, flip, not single or subfolders)
+    #transform(images_path, OUT_PATH, rotation_90, not single or subfolders)
+    #transform(images_path, OUT_PATH, rotation_180, not single or subfolders)
+
+    # perte couleurs
+    #transform(images_path, OUT_PATH, grayscale, not single or subfolders)
+    transform(images_path, OUT_PATH, invert, not single or subfolders)
+
+    # perte pixels
+    #transform(images_path, OUT_PATH, crop, not single or subfolders)
+    transform(images_path, OUT_PATH, blue, not single or subfolders)
+
+#multiplier('../donnees-projet/Data', './sortie/multiplication')

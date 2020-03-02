@@ -1,6 +1,8 @@
 from PIL import Image
 import os
 import numpy as np
+from sklearn import datasets
+import matplotlib.pyplot as plt
 
 #PATH = '../traitement-images/sortie/c+g/'
 

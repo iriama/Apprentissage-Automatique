@@ -6,10 +6,8 @@ from os import path, makedirs
 from PIL import Image as pImage
 from utils import load_paths
 
-
-#IN_PATH = '../main/imgTest'
-#OUT_PATH = '../main/imgTest'
 def normaliser(IN_PATH, OUT_PATH):
+    print('> Normalisation')
     print('- Dossier entree : "%s"' % IN_PATH)
     print('- Dossier sortie : "%s"' % OUT_PATH)
     
@@ -17,10 +15,8 @@ def normaliser(IN_PATH, OUT_PATH):
     images_path = load_paths(IN_PATH)
     
     # Creer le dossier de sortie s'il n'existe pas
-    try:
-        makedirs(OUT_PATH)
-    except OSError:
-        pass
+    makedirs(OUT_PATH, exist_ok=True)
+
     # Traite les images
     for image_path in images_path:
         image = pImage.open(image_path).convert('RGB')
@@ -28,10 +24,7 @@ def normaliser(IN_PATH, OUT_PATH):
         print('> Image redimensionnee "%s" : %s => %s' % (image_path, image.size, image_resized.size))
         # image_resized.show()
         image_resized_path = OUT_PATH + image_path.replace(IN_PATH, '')
-        try :
-            makedirs(path.dirname(image_resized_path))
-        except OSError:
-            pass
+        makedirs(path.dirname(image_resized_path), exist_ok=True)
     
     
         name_split = path.basename(image_resized_path).split('.')
@@ -43,3 +36,5 @@ def normaliser(IN_PATH, OUT_PATH):
     
         image_resized.save(image_resized_path, 'JPEG')
         print('  Sauvegardee sous "%s"' % image_resized_path)
+
+#normaliser('./sortie/multiplication', './sortie/final')
