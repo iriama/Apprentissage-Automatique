@@ -12,3 +12,4 @@ Organisation du projet
 - [ ] Intégrer les dépendances dans setup.py :
 . sickit-learn
 . pillow
+. joblib
